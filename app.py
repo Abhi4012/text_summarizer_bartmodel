@@ -6,7 +6,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index.html') # this is index.html render 
 
 @app.route('/summarize', methods=['POST'])
 def summarize():
@@ -15,8 +15,8 @@ def summarize():
 
         summarizer = pipeline (
             task="summarization",
-            model="facebook/bart-large-cnn",
-            tokenizer="facebook/bart-large-cnn",
+            model="facebook/bart-large-cnn", # using this model form huggingface https://huggingface.co/facebook/bart-large-cnn
+            tokenizer="facebook/bart-large-cnn", # word tokenizer using facebook/bart-large-cnn model
             framework="pt",
             min_length=20,
             max_length=40,
@@ -27,7 +27,7 @@ def summarize():
         output = summarizer(input_text, max_length=150, min_length=30, do_sample=False)
         summary = output[0]['summary_text']
 
-        return render_template('summary.html', summary=summary)
+        return render_template('summary.html', summary=summary) # This is template/summary.html which get summary from text that you will provide to app
 
 if __name__ == '__main__':
     app.run(debug=True)
