@@ -1,0 +1,20 @@
+<!-- index.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Text Summarization</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <h1>Text Summarization</h1>
+        <form action="/summarize" method="post">
+            <textarea name="input_text" rows="10" cols="50" placeholder="Enter the text you want to summarize"></textarea><br>
+            <button type="submit">Summarize</button>
+        </form>
+    </div>
+    
+</body>
+</html>
