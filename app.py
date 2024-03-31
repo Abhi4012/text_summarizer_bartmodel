@@ -4,7 +4,7 @@ import os
 
 app = Flask(__name__)
 
-# Cache directory ko badalne ka tareeka
+# change the chache directory
 cache_dir = os.path.join(app.instance_path, 'cache')
 
 # Cache directory ko banane ka tareeka
