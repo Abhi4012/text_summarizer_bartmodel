@@ -42,12 +42,19 @@
 
 from flask import Flask, render_template, request, jsonify
 from transformers import pipeline, AutoTokenizer, AutoModelForSeq2SeqLM
+import os
 
 app = Flask(__name__)
 
+# Determine the path for cache directory
+cache_dir = os.path.join(app.instance_path, 'cache')
+
+# Create cache directory if it doesn't exist
+os.makedirs(cache_dir, exist_ok=True)
+
 # Load tokenizer and model separately to avoid caching issues
-tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn")
-model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn")
+tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn", cache_dir=cache_dir)
+model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn", cache_dir=cache_dir)
 
 @app.route('/')
 def home():
