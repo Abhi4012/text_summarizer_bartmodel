@@ -10,7 +10,7 @@ cache_dir = os.path.join(app.instance_path, 'cache')
 # Cache directory ko banane ka tareeka
 os.makedirs(cache_dir, exist_ok=True)
 
-# Tokenizer aur model ko alag alag load karne ka tareeka
+# tokenizer and model are seprated
 tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn", cache_dir=cache_dir)
 model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn", cache_dir=cache_dir)
 
