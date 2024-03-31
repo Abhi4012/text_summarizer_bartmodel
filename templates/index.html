@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,11 +9,54 @@
 <body>
     <div class="container">
         <h1>Text Summarization</h1>
-        <form action="/summarize" method="post">
-            <textarea name="input_text" rows="10" cols="50" placeholder="Enter the text you want to summarize"></textarea><br>
-            <button type="submit">Summarize</button>
+        <form id="summarize_form" action="/summarize" method="post">
+            <textarea name="input_text" id="input_text" rows="10" cols="50" placeholder="Enter the text you want to summarize"></textarea><br>
+            <button type="submit" id="summarize_button">Summarize</button>
+            <button type="button" id="cancel_button" style="display: none;">Cancel</button>
+            <div id="searching_logo" class="loader-container" style="display: none;">
+                <div class="loader"></div>
+            </div>
         </form>
+        
+        <!-- Summary Section -->
+        <div id="summary_section" style="display: none;">
+            <h2>Summary:</h2>
+            <p id="summary_content"></p>
+        </div>
     </div>
-    
+
+    <!-- Script to handle form submission and display summary -->
+    <script>
+        const form = document.getElementById('summarize_form');
+        const cancelButton = document.getElementById('cancel_button');
+        const searchingLogo = document.getElementById('searching_logo');
+        const summarizeButton = document.getElementById('summarize_button');
+
+        form.addEventListener('submit', async function(event) {
+            event.preventDefault();
+            summarizeButton.style.display = 'none';
+            cancelButton.style.display = 'inline-block';
+            searchingLogo.style.display = 'block';
+            const formData = new FormData(this);
+            const response = await fetch('/summarize', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            document.getElementById('summary_content').textContent = data.summary;
+            document.getElementById('summary_section').style.display = 'block';
+            searchingLogo.style.display = 'none';
+            summarizeButton.style.display = 'inline-block';
+            cancelButton.style.display = 'none';
+        });
+
+        cancelButton.addEventListener('click', function() {
+            form.reset();
+            cancelButton.style.display = 'none';
+            summarizeButton.style.display = 'inline-block';
+            searchingLogo.style.display = 'none';
+            document.getElementById('summary_section').style.display = 'none';
+        });
+    </script>
 </body>
 </html>
