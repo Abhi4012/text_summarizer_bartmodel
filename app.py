@@ -46,13 +46,13 @@ import os
 
 app = Flask(__name__)
 
-# Determine the path for cache directory
+# Cache directory ko badalne ka tareeka
 cache_dir = os.path.join(app.instance_path, 'cache')
 
-# Create cache directory if it doesn't exist
+# Cache directory ko banane ka tareeka
 os.makedirs(cache_dir, exist_ok=True)
 
-# Load tokenizer and model separately to avoid caching issues
+# Tokenizer aur model ko alag alag load karne ka tareeka
 tokenizer = AutoTokenizer.from_pretrained("facebook/bart-large-cnn", cache_dir=cache_dir)
 model = AutoModelForSeq2SeqLM.from_pretrained("facebook/bart-large-cnn", cache_dir=cache_dir)
 
